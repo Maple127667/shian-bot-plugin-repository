@@ -37,7 +37,7 @@ qus7 = on_command("ans7",aliases={"山山现在几点了","诗岸现在几点了
 
 qus8 = on_command("ans8",aliases={"山山今天几号","诗岸今天几号"},block=True) 
 
-qus9 = on_regex("^早$|早安|山山早|诗岸早|早上好",priority=2)
+qus9 = on_regex("^早$|早安|山山早|诗岸早|早上好|早~",priority=2)
 
 qus10 = on_regex("晚安|睡了",priority=2)
 
@@ -71,7 +71,7 @@ async def _(matcher: Matcher, _: MessageEvent):
 async def _(matcher: Matcher, _: MessageEvent):
     ans_tup = (
         "喂喂！你是笨蛋嘛？（歪头）",
-"你好蠢哦（锤）",
+"你好笨哦（锤）",
 "你能不能聪明一点呀！（微恼）"
     )
 
@@ -150,13 +150,13 @@ async def _(matcher: Matcher, _: MessageEvent):
 
     t = time.localtime()
     hour = t.tm_hour
-    if(hour > 5 and hour < 8): #测试完毕
+    if(hour >= 5 and hour < 8): #测试完毕
         ans_tup = ans1_tup
-    elif (hour > 2 and hour < 5):#测试完毕
+    elif (hour >= 2 and hour < 5):#测试完毕
         ans_tup = ans2_tup
-    elif(hour > 21 and hour < 24): #测试完毕
+    elif((hour >= 21 and hour < 24) or (hour >= 0 and hour < 2) ): #测试完毕
         ans_tup = ans3_tup
-    else:                           #测试完毕 - 2024 - 8 - 2
+    else:                           #debug一次（恼 8-3
         ans_tup = ans4_tup
     
     ans1=ans_tup[random.randint(0,len(ans_tup)-1)]
