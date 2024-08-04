@@ -170,7 +170,7 @@ async def _(matcher: Matcher, _: MessageEvent):
 
 
 
-
+#qus1 = on_command("ans_",aliases={"山山在吗","诗岸在吗"},block=True)
 
 # @qus_.handle()
 # async def _(matcher: Matcher, _: MessageEvent):
