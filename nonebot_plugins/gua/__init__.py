@@ -26,10 +26,6 @@ qus1 = on_command("gua1",aliases={"随机卦象"},block=True)
 
 @qus1.handle()
 async def _(matcher: Matcher, _: MessageEvent):
-    ans_tup = (
-        "1.jpg",
-        "2.jpg"
-       )
    
     ans_num = random.randint(1,64)
     ans1 = str(ans_num) + ".jpg"
@@ -44,8 +40,10 @@ async def _(matcher: Matcher, _: MessageEvent):
     path1 = img_path
 
     img = MessageSegment.image(file=path1)
-
+    
     await matcher.send(img)
+
+    # await matcher.send(str(path1))
     # await matcher.send(MessageSegment.image("./64gua/1.jpg"))
     await matcher.finish()
    

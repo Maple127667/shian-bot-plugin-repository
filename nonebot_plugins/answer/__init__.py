@@ -31,7 +31,7 @@ qus4 = on_command("ans4",aliases={"山山可爱","诗岸可爱"},block=True)
 
 qus5 = on_command("ans5",aliases={"山山你好","诗岸你好"},block=True) 
 
-qus6 = on_regex(".*山山.*|.*诗岸.*",priority=10)
+qus6 = on_regex(".*山山.*|.*诗岸.*",priority=20)
 
 qus7 = on_command("ans7",aliases={"山山现在几点了","诗岸现在几点了"},block=True) 
 
@@ -105,9 +105,12 @@ async def _(matcher: Matcher, _: MessageEvent):
       "山山在哦~",
 "在哦在哦~有什么事~",
 "（吹灭火器ing）" )
-
-    ans1=ans_tup[random.randint(0,len(ans_tup)-1)]
-    await matcher.finish(ans1)
+    if((random.randint(0,10))<=2):
+        ans1=ans_tup[random.randint(0,len(ans_tup)-1)]
+        await matcher.finish(ans1)
+    else:
+        await matcher.finish()
+    
 
 @qus7.handle()
 async def _(matcher: Matcher, _: MessageEvent):

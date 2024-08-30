@@ -119,4 +119,3 @@ nowF = (Math.ceil(nowF));
   return seal.ext.newCmdExecuteResult(true);
 };
 ext.cmdMap['今日运势'] = cmd;
-
