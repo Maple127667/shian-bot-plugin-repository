@@ -5,9 +5,21 @@ from .config import Config
 
 __plugin_meta__ = PluginMetadata(
     name="fortune",
-    description="",
-    usage="",
-    config=Config,
+    description="专供于诗岸的伪随机运势生成，歌词抽奖插件",
+    usage="使用指令：.今日运势、诗岸今日运势、查询歌词收藏夹，查询今日运势",
+
+    type="application",
+    # 发布必填，当前有效类型有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）。
+
+    homepage="https://github.com/Maple127667/shian-bot-plugin-repository/tree/main/nonebot_plugins/fortune",
+    # 发布必填。
+
+    # config=Config,
+    # 插件配置项类，如无需配置可不填写。
+
+    supported_adapters={"~onebot.v11"},
+    # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
+    # 若插件可以保证兼容所有适配器（即仅使用基本适配器功能）可不填写，否则应该列出插件支持的适配器。
 )
 
 config = get_plugin_config(Config)
@@ -25,7 +37,8 @@ from datetime import datetime
 
 
 
-qus = on_command("ans_",aliases={"山山今日运势","诗岸今日运势","。今日运势",".今日运势"},block=True)
+qus1 = on_command("ans_",aliases={"山山今日运势","诗岸今日运势","。今日运势",".今日运势"},priority=1,block=True)
+qus2 = on_command("ans_",aliases={"查询歌词收藏夹"},priority=1,block=True)
 
 music_tup1 = (        #大吉
             "你是所有漫反射的光线而我简出你身影",
@@ -93,7 +106,7 @@ music_tup4 = (
 
 
 
-@qus.handle()
+@qus1.handle()
 async def _(matcher: Matcher, _: MessageEvent):
     # 获取当前日期和时间
     now = datetime.now()
@@ -206,3 +219,36 @@ async def _(matcher: Matcher, _: MessageEvent):
 
     await matcher.finish(ans1)
 
+
+@qus2.handle()
+async def _(matcher: Matcher, _: MessageEvent):
+
+    path = 'data/music_collections/' + str(_.user_id) + '.json'
+
+    try:
+        with open(path, 'r',encoding='utf-8') as json_file:
+            data = json.load(json_file)
+    except FileNotFoundError:
+        data = {}
+        await matcher.finish("你还没有收集歌词哦？\n快去 .今日运势 抽一个吧")
+
+    values = data.values()
+
+    values = str(values)[14:-3]
+
+    values = values.replace(" '",'')
+    values = values.replace("'",'')
+    values_list = values.split(',')
+    
+    ans = ''
+
+    for i in range(0,len(values_list)-1):
+        if values_list[i]  == '' :
+            del values_list[i]
+    
+    for i in values_list:
+        ans = ans + "\"" + i +'\"\n'
+    
+    ans = ans + "已经收集" + str(len(values_list)) + "/52"
+
+    await matcher.finish(ans)

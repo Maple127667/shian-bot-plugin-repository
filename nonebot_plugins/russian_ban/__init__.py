@@ -5,9 +5,21 @@ from .config import Config
 
 __plugin_meta__ = PluginMetadata(
     name="russian_ban",
-    description="",
-    usage="",
-    config=Config,
+    description="一个简单的俄罗斯轮盘小游戏",
+    usage="使用指令：填入子弹，开枪，转动轮盘，进行一次俄罗斯轮盘",
+
+    type="application",
+    # 发布必填，当前有效类型有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）。
+
+    homepage="https://github.com/Maple127667/shian-bot-plugin-repository/tree/main/nonebot_plugins/russian_ban%20copy",
+    # 发布必填。
+
+    # config=Config,
+    # 插件配置项类，如无需配置可不填写。
+
+    supported_adapters={"~onebot.v11"},
+    # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
+    # 若插件可以保证兼容所有适配器（即仅使用基本 适配器功能）可不填写，否则应该列出插件支持的适配器。
 )
 
 config = get_plugin_config(Config)
@@ -23,9 +35,9 @@ from nonebot.params import CommandArg
 
 
 
-qus1 = on_command("ans_",aliases={"填入子弹","填充子弹"},block=True) #开始填入子弹
-qus2 = on_command("ans_",aliases={"开枪"},block=True)
-qus3 = on_command("ans_",aliases={"转动轮盘"},block=True)
+qus1 = on_command("ans_",aliases={"填入子弹","填充子弹"},priority=1,block=True) #开始填入子弹
+qus2 = on_command("ans_",aliases={"开枪"},priority=1,block=True)
+qus3 = on_command("ans_",aliases={"转动轮盘"},priority=1,block=True)
 
 flag = 0
 
